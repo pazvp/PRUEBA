@@ -10,26 +10,25 @@
     <nav>
         <h1>Aves Chilenas</h1>
         <ul>
-            <li><a href="index.html">Portada</a></li>
-            <li><a href="page-1.html">page-1</a></li>
-            <li><a href="page-2.html">page-2</a></li>
-            <li><a href="page-3.html">page-3</a></li>
-            <li><a href="page-4.html">page-4</a></li>
-            <li><a href="page-5.html" class="active">page-5</a></li>
-            <li><a href="page-6.html">page-6</a></li>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="page-1.html" >Pájaros cantores</a></li>
+            <li><a href="page-2.html" >Aves de playa</a></li>
+            <li><a href="page-3.html">Patos y Gansos</a></li>
+            <li><a href="page-4.html">Aves rapaces</a></li>
+            <li><a href="page-5.html" class="active">Aves marinas</a></li>
+            <li><a href="page-6.html">Palomas y Tórtolas</a></li>
         </ul>
     </nav>
     <div class="container">
-        <h2>page-5</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam et dignissim ligula, id vestibulum mauris. Curabitur libero orci, ultrices eu risus vehicula, consequat pretium sem. Fusce dolor arcu, cursus a justo sit amet, dapibus aliquam tellus. Morbi a orci at lectus eleifend varius fermentum quis neque.</p>
+        <h2> Aves marinas (Pelecaniformes)</h2>
+        <p>Los Pelecaniformes son aves acuáticas de gran tamaño que incluyen garzas, huairavas y bandurrias. Se caracterizan por sus largos cuellos, patas altas y picos especializados para capturar peces y otros animales acuáticos. En Chile habitan humedales, lagunas, ríos y costas, donde se les observa pescando pacientemente o buscando alimento en aguas poco profundas. Son excelentes voladoras con vuelos elegantes y planificados, cumpliendo un rol importante en el control de poblaciones de peces e invertebrados acuáticos.</p>
         <div class="grid" id="grid"></div>
     </div>
     <footer>
-        <p>Desarrollado por <a href="#" target="_blank">Nombre Apellido</a> &copy; 2025</p>
+        <p>Desarrollado por <a href="#" target="_blank">Paz Valenzuela Pacheco</a> &copy; 2025</p>
     </footer>
     <script>
         const grid = document.getElementById('grid');
-
         async function datos(raw) {
             try {
                 let consulta = await fetch(raw);
@@ -37,22 +36,23 @@
                 console.log(data);
                 let conteo = 1;
                 data.forEach((a) => {
-                    //if(){                    
-                    grid.innerHTML += `
-                        <div class="grid-item">
-                            <img src="${a.image.url.replace("http://www.buscaves.cl/", "https://buscaves.cl/")}" alt="${a.names.spanish}"/>
-                            <p>${conteo}. <em>${a.names.spanish}</em></p>
-                            <small>${a.names.latin}</small>
-                        </div>
-                    `;
-                    conteo++;
-                    //};
+
+                    if(a.info.order.value.includes("Pelecaniformes")) {                    
+                        grid.innerHTML += `
+                            <div class="grid-item">
+                                <img src="${a.image.url.replace("http://www.buscaves.cl/", "https://buscaves.cl/")}" alt="${a.names.spanish}"/>
+                                <p>${conteo}. <em>${a.names.spanish}</em></p>
+                                <small>${a.names.latin}</small>
+
+                            </div>
+                        `;
+                        conteo++;
+                    }
                 });
             } catch (error) {
                 console.error('Error al cargar los datos:', error);
             }
         }
-
         datos("https://raw.githubusercontent.com/NinjasCL/chileanbirds-dataset/refs/heads/master/data/birds.json");
     </script>
 </body>
